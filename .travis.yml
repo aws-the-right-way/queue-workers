@@ -1,0 +1,18 @@
+dist: xenial
+
+language: python
+
+python:
+  - "3.7"
+
+services:
+  - docker
+
+before_install:
+  - docker build . -t queue-workers:0.1
+  - docker images
+  - docker run --name queue-workers -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -d queue-workers:0.1
+
+script:
+  - bash test.sh
+

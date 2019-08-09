@@ -12,10 +12,10 @@ out_hdlr.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
 out_hdlr.setLevel(logging.INFO)
 log.addHandler(out_hdlr)
 log.setLevel(logging.INFO)
-sqs = boto3.resource('sqs', region_name='eu-central-1', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-                     aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
-dynamodb = boto3.resource('dynamodb', region_name='eu-central-1', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-                          aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'))
+sqs = boto3.resource('sqs', region_name='eu-central-1', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID_WORKER'),
+                     aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY_WORKER'))
+dynamodb = boto3.resource('dynamodb', region_name='eu-central-1', aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID_WORKER'),
+                          aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY_WORKER'))
 table = dynamodb.Table('stocks')
 
 queue = sqs.get_queue_by_name(QueueName='stock-of-the-day')

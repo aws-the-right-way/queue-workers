@@ -10,9 +10,17 @@ services:
 
 before_install:
   - docker build . -t queue-workers:0.1
-  - docker images
-  - docker run --name queue-workers -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -d queue-workers:0.1
+  - docker run --name queue-workers -e AWS_ACCESS_KEY_ID_WORKER=$AWS_ACCESS_KEY_ID_WORKER -e AWS_SECRET_ACCESS_KEY_WORKER=$AWS_SECRET_ACCESS_KEY_WORKER -d queue-workers:0.1
 
 script:
   - bash test.sh
 
+after_success:
+  - pip install awscli
+  - export PATH=$PATH:$HOME/.local/bin
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master

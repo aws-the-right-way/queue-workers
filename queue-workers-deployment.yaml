@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-worker
+  labels:
+    app: worker
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: queue-worker
+          image: 740966400558.dkr.ecr.eu-central-1.amazonaws.com/queue-workers:1.0
+          ports:
+            - containerPort: 5002
